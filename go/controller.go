@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -68,5 +69,9 @@ func (ctl *Controller) Sleep(c echo.Context) error {
 }
 
 func (ctl *Controller) Hello(c echo.Context) error {
-	return c.String(http.StatusOK, "hello")
+	hostname, err := os.Hostname()
+	if err != nil {
+		return c.String(http.StatusOK, "hello")
+	}
+	return c.String(http.StatusOK, "hello "+hostname)
 }

@@ -48,9 +48,10 @@ services:
     depends_on:
       - mysql
   web-server:
-    build:
-      context: .
-      dockerfile: go/Dockerfile
+    #build:
+    #  context: ./go
+    #  dockerfile: Dockerfile
+    image: jonghun/simple-web-app
     restart: always
     ports:
       - 1323:1323
