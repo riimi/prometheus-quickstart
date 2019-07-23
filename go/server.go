@@ -5,6 +5,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"time"
+	"log"
 )
 
 func main() {
@@ -26,8 +28,13 @@ func setup() *Controller {
 	if err != nil {
 		panic(err.Error())
 	}
-	if err := db.Ping(); err != nil {
-		panic(err.Error())
+	for {
+		err := db.Ping();
+		if err == nil {
+			break
+		}
+		log.Printf("%v\n", err)
+		time.Sleep(time.Second)
 	}
 	return &Controller{
 		Repo: &GreetingRepoMySQL{db: db},
